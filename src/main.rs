@@ -17,7 +17,7 @@ fn main() {
 
             let ir = (255.999 * r) as i32;
             let ig = (255.999 * g) as i32;
-            let ib = (255.999 * g) as i32;
+            let ib = (255.999 * b) as i32;
             let colors = format!("{} {} {}\n", ir, ig, ib);
             file.write_all(colors.as_bytes()).unwrap();
         }
