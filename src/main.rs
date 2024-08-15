@@ -1,6 +1,6 @@
 use std::{
-    fs::{File, OpenOptions},
-    io::Write,
+    fs::OpenOptions,
+    io::{self, Write},
 };
 
 mod vec3;
@@ -19,6 +19,8 @@ fn main() {
     file.write_all(head.as_bytes()).unwrap();
     for i in 0..image_width {
         for j in 0..image_height {
+            println!("\rScanlines remaining: {} ", (image_height - j));
+            io::stdout().flush().unwrap();
             let r = i as f32 / (image_width - 1) as f32;
             let g = j as f32 / (image_height - 1) as f32;
             let b = 0.0;
@@ -30,4 +32,5 @@ fn main() {
             file.write_all(colors.as_bytes()).unwrap();
         }
     }
+    println!("Done!");
 }
