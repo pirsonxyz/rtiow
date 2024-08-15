@@ -1,4 +1,7 @@
-use std::{fs::File, io::Write};
+use std::{
+    fs::{File, OpenOptions},
+    io::Write,
+};
 
 mod vec3;
 
@@ -7,10 +10,15 @@ fn main() {
     let image_height = 256;
 
     let head = format!("P3\n{} {}\n255\n", image_width, image_height);
-    let mut file = File::open("image.ppm").unwrap_or_else(|_| File::create("image.ppm").unwrap());
+    let mut file = OpenOptions::new()
+        .write(true)
+        .create(true)
+        .truncate(true)
+        .open("image.ppm")
+        .unwrap();
     file.write_all(head.as_bytes()).unwrap();
-    for j in 0..image_width {
-        for i in 0..image_height {
+    for i in 0..image_width {
+        for j in 0..image_height {
             let r = i as f32 / (image_width - 1) as f32;
             let g = j as f32 / (image_height - 1) as f32;
             let b = 0.0;
